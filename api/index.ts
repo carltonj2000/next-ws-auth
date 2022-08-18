@@ -4,8 +4,15 @@ import express from "express";
 
 import {databaseClient} from "./database";
 import {getGitHubUser} from "./github-adapter";
-import {getUserByGitHubId, createUser} from "./user-service";
-import {buildTokens, setTokens} from "./token-utils";
+import {getUserByGitHubId, createUser, getUserById} from "./user-service";
+import {
+  buildTokens,
+  clearTokens,
+  refreshTokens,
+  setTokens,
+  verifyRefreshToken,
+} from "./token-utils";
+import {Cookies} from "@shared";
 
 const app = express();
 
@@ -27,7 +34,22 @@ app.get("/github", async (req, res) => {
   res.redirect(`${process.env.CLIENT_URL}/me`);
 });
 
-app.get("/refresh", async (req, res) => {});
+app.get("/refresh", async (req, res) => {
+  try {
+    const current = verifyRefreshToken(req.cookies[Cookies.RefreshToken]);
+    const user = await getUserById(current.userId);
+    if (!user) throw "User not found";
+
+    const {accessToken, refreshToken} = refreshTokens(
+      current,
+      user.tokenVersion
+    );
+    setTokens(res, accessToken, refreshToken);
+  } catch (error) {
+    clearTokens(res);
+  }
+  res.end();
+});
 app.get("/logout", async (req, res) => {});
 app.get("/logout-all", async (req, res) => {});
 app.get("/me", async (req, res) => {
