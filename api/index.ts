@@ -4,7 +4,12 @@ import express from "express";
 
 import {databaseClient} from "./database";
 import {getGitHubUser} from "./github-adapter";
-import {getUserByGitHubId, createUser, getUserById} from "./user-service";
+import {
+  getUserByGitHubId,
+  createUser,
+  getUserById,
+  increaseTokenVersion,
+} from "./user-service";
 import {
   buildTokens,
   clearTokens,
@@ -13,6 +18,7 @@ import {
   verifyRefreshToken,
 } from "./token-utils";
 import {Cookies} from "@shared";
+import {authMiddleware} from "./auth-middleware";
 
 const app = express();
 
@@ -50,10 +56,21 @@ app.get("/refresh", async (req, res) => {
   }
   res.end();
 });
-app.get("/logout", async (req, res) => {});
-app.get("/logout-all", async (req, res) => {});
-app.get("/me", async (req, res) => {
-  res.send("moi");
+
+app.get("/logout", authMiddleware, async (req, res) => {
+  clearTokens(res);
+  res.end();
+});
+
+app.get("/logout-all", authMiddleware, async (req, res) => {
+  await increaseTokenVersion(res.locals.token.userId);
+  clearTokens(res);
+  res.end();
+});
+
+app.get("/me", authMiddleware, async (req, res) => {
+  const user = await getUserById(res.locals.token.useId);
+  res.json(user);
 });
 
 async function main() {

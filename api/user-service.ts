@@ -33,3 +33,13 @@ export async function getUserByGitHubId(gitHubUserId: number) {
   const res2 = result as UserDocument;
   return res2;
 }
+
+export async function increaseTokenVersion(userId: string) {
+  const coll = await collection();
+  const result = await coll.findOneAndUpdate(
+    {id: userId},
+    {$inc: {tokenVersion: 1}}
+  );
+  if (result.ok) return result.value;
+  throw new Error();
+}
