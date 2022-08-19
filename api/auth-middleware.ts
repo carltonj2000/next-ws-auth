@@ -14,4 +14,5 @@ export function authMiddleware(
     return next(new Error("Not signed in"));
   }
   res.locals.token = token;
+  next();
 }

@@ -8,6 +8,16 @@ yarn run ts-node-dev --project api/tsconfig.json -r tsconfig-paths/register api/
 https://github.com/login/oauth/authorize?client_id=b156b4a3720fb62fca40&redirect_uri=http://localhost:3001/github?scope=user:email
 ```
 
+## Next JS Client
+
+```bash
+yarn create next-app --typescript # project named client
+cd client
+yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest
+npx tailwindcss init -p
+yarn add -D daisyui
+```
+
 ## Mongo
 
 ```bash

@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import morgan from "morgan";
 
 import {databaseClient} from "./database";
 import {getGitHubUser} from "./github-adapter";
@@ -22,6 +23,7 @@ import {authMiddleware} from "./auth-middleware";
 
 const app = express();
 
+app.use(morgan("tiny"));
 app.use(cors({credentials: true, origin: process.env.CLIENT_URL}));
 app.use(cookieParser());
 
@@ -69,7 +71,7 @@ app.get("/logout-all", authMiddleware, async (req, res) => {
 });
 
 app.get("/me", authMiddleware, async (req, res) => {
-  const user = await getUserById(res.locals.token.useId);
+  const user = await getUserById(res.locals.token.userId);
   res.json(user);
 });
 
