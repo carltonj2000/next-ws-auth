@@ -25,7 +25,9 @@ export default function Me() {
   console.log({user});
   return (
     <main className="flex flex-col items-center mt-4">
-      <h1 className="text-xl">Client Side Authentication</h1>
+      <h1 className="text-xl mb-3 bg-slate-100 px-3 py-1 rounded">
+        Client Side Authentication
+      </h1>
       {user ? <p>Hi, {user.name}</p> : <p>Loading ...</p>}
     </main>
   );

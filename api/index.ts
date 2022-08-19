@@ -42,7 +42,7 @@ app.get("/github", async (req, res) => {
   res.redirect(`${process.env.CLIENT_URL}/me`);
 });
 
-app.get("/refresh", async (req, res) => {
+app.post("/refresh", async (req, res) => {
   try {
     const current = verifyRefreshToken(req.cookies[Cookies.RefreshToken]);
     const user = await getUserById(current.userId);
