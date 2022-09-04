@@ -1,4 +1,19 @@
-# Websockets Auth With Refresh Access Tokens
+# WebSockets Auth With Refresh Access Tokens
+
+I did not deploy this example but the end of video in the
+`Code History`
+section show how to deploy to Kubernetes on google cloud.
+Extra files that I did not create buy copied from the repo noted in the
+`Code History`
+section are stored in the `note_used` directory.
+
+Dev locally by:
+
+- `docker compose up` in the root directory
+  - `docker compose restart mongo-express` due to a timing issue
+- `yard dev` in the client directory
+
+## Notes
 
 ```bash
 yarn run ts-node-dev --project api/tsconfig.json -r tsconfig-paths/register api/index.ts
@@ -31,7 +46,7 @@ docker compose restart mongo-express
 mkdir next-ws-auth
 cd next-ws-auth/
 yarn init -y
-yarn add cookie-parser cors express jsonwebtoken mongodb ts-node uuid axios
+yarn Sadd cookie-parser cors express jsonwebtoken mongodb ts-node uuid axios
 yarn add -D @types/cookie-parser @types/cors @types/express @types/jsonwebtoken @types/node @types/uuid
 yarn add -D ts-node-dev tsconfig-paths typescript
 
