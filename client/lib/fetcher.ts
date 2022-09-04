@@ -44,3 +44,16 @@ export const getError = (error: AxiosError) => {
   if (error.isAxiosError && error.response) return error.response.data;
   return "Unexpected error";
 };
+
+export const poster = async <T>(
+  url: string,
+  payload?: unknown
+): Promise<QueryResponse<T>> => {
+  try {
+    const request = () => axios.post(url, payload, {withCredentials: true});
+    const {data} = await handleRequest(request);
+    return [null, data];
+  } catch (error) {
+    return [error as string, null];
+  }
+};

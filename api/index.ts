@@ -59,12 +59,12 @@ app.post("/refresh", async (req, res) => {
   res.end();
 });
 
-app.get("/logout", authMiddleware, async (req, res) => {
+app.post("/logout", authMiddleware, async (req, res) => {
   clearTokens(res);
   res.end();
 });
 
-app.get("/logout-all", authMiddleware, async (req, res) => {
+app.post("/logout-all", authMiddleware, async (req, res) => {
   await increaseTokenVersion(res.locals.token.userId);
   clearTokens(res);
   res.end();

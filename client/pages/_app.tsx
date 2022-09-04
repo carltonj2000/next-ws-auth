@@ -5,7 +5,7 @@ import {UserProvider} from "contexts/user-context";
 
 function MyApp({Component, pageProps}: AppProps) {
   return (
-    <UserProvider>
+    <UserProvider initialUser={pageProps?.user}>
       <div className="flex flex-col max-w-xl mx-auto">
         <Navigation />
         <Component {...pageProps} />

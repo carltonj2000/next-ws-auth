@@ -39,10 +39,14 @@ git init
 touch tsconfig.json .gitignore
 mkdir api shared .vscode
 touch api/tsconfig.json shared/tsconfig.json .vscode/settings.json
+
+yarn add cookie ws
+yarn add -D @types/cookie @types/ws
 ```
 
 ## Code History
 
 The code in this repository is based on the
 [Fullstack Authentication with Refresh Access Tokens](https://youtu.be/xMsJPnjiRAc)
-video.
+video and
+[this repo](https://github.com/flolu/auth).

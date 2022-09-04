@@ -25,6 +25,20 @@ services:
     command: yarn run ts-node-dev --project api/tsconfig.json -r tsconfig-paths/register api/index.ts
     env_file: .env.development
 
+  realtime:
+    image: node:18
+    volumes:
+      - ./node_modules:/node_modules
+      - ./realtime:/realtime
+      - ./shared:/shared
+      - ./tsconfig.json:/tsconfig.json
+      - ./package.json:/package.json
+    ports:
+      - "3002:3000"
+    working_dir: /
+    command: yarn run ts-node-dev --project realtime/tsconfig.json -r tsconfig-paths/register realtime/index.ts
+    env_file: .env.development
+
   mongo-express:
     image: mongo-express
     ports:
